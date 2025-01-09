@@ -9,7 +9,7 @@ import random
 import numpy as np
 from docx import Document
 
-def create_exam(df, df_long, long_titles, answer_columns, question='Pregunta', description=None, subject=None, is_odd=False):
+def     create_exam(df, df_long, long_titles, answer_columns, question='Pregunta', description=None, subject=None, is_odd=False):
     document = Document()
     if subject is None:
         subject = 'Examen Psicobiología'
@@ -30,16 +30,15 @@ def create_exam(df, df_long, long_titles, answer_columns, question='Pregunta', d
                     p = document.add_paragraph(f'{line.strip()}', style=f'List Bullet {tabs}')
             else:
                 p = document.add_paragraph(f'{line.strip()}', style=f'Normal')
-
-
-    # p0 = document.add_paragraph(f'5 puntos en 20 preguntas tipo test (o respuesta en una o dos palabras): coeficiente de reducción cada 3 resta 0,25', style='List Bullet')
-    # p1 = document.add_paragraph(f'5 puntos en preguntas de desarrollo:', style='List Bullet')
-    # p2 = document.add_paragraph(f'Un problema de genética.', style='List Bullet 2')
-    # p3 = document.add_paragraph(f'3 preguntas del temario.', style='List Bullet 2')
-    # p4 = document.add_paragraph(f'Una pregunta sobre el trabajo final.', style='List Bullet 2')
-    # p5 = document.add_paragraph(f'Tema tratado, ¿cómo afecta a la conducta?', style='List Bullet 3')
-    # p6 = document.add_paragraph(f'Causas (genéticas, ambientales, de los dos tipos...)', style='List Bullet 3')
-    # p7 = document.add_paragraph(f'Abordaje desde el punto de vista profesional.', style='List Bullet 3')
+    else :
+        p0 = document.add_paragraph(f'5 puntos en 20 preguntas tipo test (o respuesta en una o dos palabras): coeficiente de reducción cada 3 resta 0,25', style='List Bullet')
+        p1 = document.add_paragraph(f'5 puntos en preguntas de desarrollo:', style='List Bullet')
+        p2 = document.add_paragraph(f'Un problema de genética.', style='List Bullet 2')
+        p3 = document.add_paragraph(f'3 preguntas del temario.', style='List Bullet 2')
+        p4 = document.add_paragraph(f'Una pregunta sobre el trabajo final: debe ir en la línea del trabajo entregado, será la fuente principal para la corrección de este apartado. Puntos a tratar:', style='List Bullet 2')
+        p5 = document.add_paragraph(f'Tema tratado, ¿cómo afecta a la conducta?', style='List Bullet 3')
+        p6 = document.add_paragraph(f'Causas (genéticas, ambientales, de los dos tipos...)', style='List Bullet 3')
+        p7 = document.add_paragraph(f'Abordaje desde el punto de vista profesional.', style='List Bullet 3')
 
     document.add_paragraph(f'')
     document.add_paragraph(f'El examen durará aproximadamente 1:30', style='Normal')
@@ -160,6 +159,12 @@ if __name__ == '__main__':
         if args['long'] is not None:
             for j in range(len(longquestions)):
                 df_long = pd.read_csv(longquestions[j], delimiter=';', index_col=False)
+                df_long = df_long.reindex(np.random.permutation(df_long.index))
+                df_long = df_long.reset_index(drop=True)
+                df_long = df_long.reindex(np.random.permutation(df_long.index))
+                df_long = df_long.reset_index(drop=True)
+                df_long = df_long.reindex(np.random.permutation(df_long.index))
+                df_long = df_long.reset_index(drop=True)
                 df_long = df_long.reindex(np.random.permutation(df_long.index))
                 df_long = df_long.reset_index(drop=True)
                 df_long = df_long.head(numslong[j])
